@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import SalaryService from '../service/SalaryService';
+import EmployeeService from '../service/EmployeeService'; 
 import { format } from 'date-fns';
 
 const AddSalaryComponent = () => {
-    const [employee_id, setEmployeeId] = useState("");
+    const [employeeId, setEmployeeId] = useState(""); 
     const [salary, setSalary] = useState("");
     const [startDate, setStartDate] = useState("");
     const [finishDate, setFinishDate] = useState("");
+    const [employee, setEmployee] = useState(null); 
     const navigate = useNavigate();
     const { id } = useParams();
 
-    const salaryData = { employee_id, salary, startDate, finishDate };
+    const salaryData = { 
+        employee, 
+        salary, 
+        startDate, 
+        finishDate 
+    };
 
     function saveSalary(e) {
         e.preventDefault();
-        if (salaryData.employee_id !== "" && salaryData.salary !== "" && salaryData.startDate !== "" && salaryData.finishDate !== "") {
+        if (employee && salary !== "" && startDate !== "" && finishDate !== "") {
             if (id) {
                 SalaryService.updateSalary(id, salaryData)
                     .then(() => navigate("/employee-salary"))
@@ -31,26 +38,30 @@ const AddSalaryComponent = () => {
     }
 
     function tile() {
-        if (id) {
-            return "Update Salary";
-        } else {
-            return "Add Salary";
-        }
+        return id ? "Update Salary" : "Add Salary";
     }
 
     useEffect(() => {
         if (id) {
             SalaryService.getSalaryById(id)
                 .then(res => {
-                    //const { employee, salary, startDate, finishDate } = res.data;
-                    setEmployeeId(res.data.employee?.id || "");
-                    setSalary(res.data.salary || "");
-                    setStartDate(res.data.startDate ? format(new Date(startDate), 'yyyy-MM-dd') : "");
-                    setFinishDate(res.data.finishDate ? format(new Date(finishDate), 'yyyy-MM-dd') : "");
+                    const { employee, salary, startDate, finishDate } = res.data;
+                    setEmployee(employee); 
+                    setSalary(salary || "");
+                    setStartDate(startDate ? format(new Date(startDate), 'yyyy-MM-dd') : "");
+                    setFinishDate(finishDate ? format(new Date(finishDate), 'yyyy-MM-dd') : "");
                 })
                 .catch(e => console.log(e));
         }
     }, [id]);
+
+    useEffect(() => {
+        if (employeeId) {
+            EmployeeService.getEmployeeById(employeeId)
+                .then(res => setEmployee(res.data))
+                .catch(e => console.log(e));
+        }
+    }, [employeeId]);
 
     return (
         <div>
@@ -61,12 +72,13 @@ const AddSalaryComponent = () => {
                         <div className='card-body'>
                             <form>
                                 <div className='form-group mb-2'>
-                                    <input className='form-control'
-                                        id='employeeId'  
-                                        name='employeeId'  
-                                        value={employee_id}
-                                        onChange={(e) => setEmployeeId(e.target.value)}
-                                        type="number" placeholder='Enter Employee ID' />
+                                    <input 
+                                        className='form-control'
+                                        value={employeeId}
+                                        onChange={(e) => setEmployeeId(e.target.value)} 
+                                        type="number" 
+                                        placeholder='Enter Employee ID' 
+                                    />
                                 </div>
                                 <div className='form-group mb-2'>
                                     <input className='form-control'
@@ -86,8 +98,8 @@ const AddSalaryComponent = () => {
                                         onChange={(e) => setFinishDate(e.target.value)}
                                         type="date" placeholder='Enter Finish Date' />
                                 </div>
-                                <button onClick={(e) => saveSalary(e)} className='btn btn-success'>Save</button> {" "}
-                                <Link to={"/employee-salary"} className='btn btn-danger' href="">Cancel</Link>
+                                <button onClick={saveSalary} className='btn btn-success'>Save</button> {" "}
+                                <Link to={"/employee-salary"} className='btn btn-danger'>Cancel</Link>
                             </form>
                         </div>
                     </div>
@@ -97,4 +109,4 @@ const AddSalaryComponent = () => {
     )
 }
 
-export default AddSalaryComponent
+export default AddSalaryComponent;

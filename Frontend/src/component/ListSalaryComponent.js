@@ -24,6 +24,7 @@ const EmployeeSalaryComponent = () => {
     return (
         <div className='container'>
             <div className='button-container'>
+                <Link to={"/add-salary"} className='custom-blue-btn mb-2 mt-3'>Add Salary</Link>
                 <Link to={"/employee"} className='btn btn-primary mb-2 mt-3' href="">List Employee</Link>
             </div>
             <h2 className='text-center mb-4'>List Employees Salary</h2>

@@ -5,7 +5,7 @@ import EmployeeService from '../service/EmployeeService';
 import { format } from 'date-fns';
 
 const UpdateSalaryComponent = () => {
-    const [employee_id, setEmployeeId] = useState("");
+    const [employeeId, setEmployeeId] = useState(""); 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [salary, setSalary] = useState("");
@@ -14,30 +14,21 @@ const UpdateSalaryComponent = () => {
     const navigate = useNavigate();
     const { id } = useParams();
 
-    const salaryData = { employee_id, salary, startDate, finishDate };
+    const salaryData = { 
+        employee: { id: employeeId }, 
+        salary, 
+        startDate, 
+        finishDate 
+    };
 
     function saveSalary(e) {
         e.preventDefault();
-        if (salaryData.salary !== "" && salaryData.startDate !== "" && salaryData.finishDate !== "") {
-            if (id) {
-                SalaryService.updateSalary(id, salaryData)
-                    .then(() => navigate("/employee-salary"))
-                    .catch(e => console.log(e));
-            } else {
-                SalaryService.saveSalary(salaryData)
-                    .then(() => navigate("/employee-salary"))
-                    .catch(e => console.log(e));
-            }
+        if (employeeId && salary !== "" && startDate !== "" && finishDate !== "") {
+            SalaryService.updateSalary(id, salaryData)
+                .then(() => navigate("/employee-salary"))
+                .catch(e => console.log(e));
         } else {
             alert("Please, fill in all inputs");
-        }
-    }
-
-    function tile() {
-        if (id) {
-            return "Update Salary";
-        } else {
-            return "Add Salary";
         }
     }
 
@@ -52,7 +43,7 @@ const UpdateSalaryComponent = () => {
                     setFinishDate(finishDate ? format(new Date(finishDate), 'yyyy-MM-dd') : "");
 
                     if (employee?.id) {
-                        EmployeeService.getEmployeeById(employee?.id)
+                        EmployeeService.getEmployeeById(employee.id)
                             .then(res => {
                                 setFirstName(res.data.firstName);
                                 setLastName(res.data.lastName);
@@ -69,22 +60,22 @@ const UpdateSalaryComponent = () => {
             <div className='container mt-5'>
                 <div className='row'>
                     <div className='card col-md-6 offset-md-3'>
-                        <h2 className='text-center'>{tile()}</h2>
+                        <h2 className='text-center'>Update Salary</h2>
                         <div className='card-body'>
                             <form>
                                 <div className='form-group mb-2'>
                                     <label className='form-control'>
-                                        <b>Employee ID: {employee_id}</b>
+                                        <b>Employee ID: {employeeId}</b>
                                     </label>
                                 </div>
                                 <div className='form-group mb-2'>
                                     <label className='form-control'>
-                                        <b>{firstName}</b>
+                                        <b>First Name: {firstName}</b>
                                     </label>
                                 </div>
                                 <div className='form-group mb-2'>
                                     <label className='form-control'>
-                                        <b>{lastName}</b>
+                                        <b>Last Name: {lastName}</b>
                                     </label>
                                 </div>
                                 <div className='form-group mb-2'>
@@ -105,7 +96,7 @@ const UpdateSalaryComponent = () => {
                                         onChange={(e) => setFinishDate(e.target.value)}
                                         type="date" placeholder='Enter Finish Date' />
                                 </div>
-                                <button onClick={(e) => saveSalary(e)} className='btn btn-success'>Save</button> {" "}
+                                <button onClick={saveSalary} className='btn btn-success'>Save</button> {" "}
                                 <Link to={"/employee-salary"} className='btn btn-danger'>Cancel</Link>
                             </form>
                         </div>

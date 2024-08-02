@@ -24,8 +24,7 @@ const ListEmployeeComponent = () => {
         <div className='container'>
             <div className='button-container'>
                     <Link to={"/add-employee"} className='custom-blue-btn mb-2 mt-3'>Add Employee</Link>
-                    <Link to={"/add-salary"} className='custom-blue-btn mb-2 mt-3'>Add Salary</Link>
-                    <Link to={`/employee-salary`} className='custom-yellow-btn'>List Salary</Link>
+                    <Link to={`/employee-salary`} className='custom-blue-btn mb-2 mt-3'>List Salary</Link>
             </div>
             <h2 className='text-center mb-4'>List Employee</h2>
             <table className='table table-bordered table striped'>
