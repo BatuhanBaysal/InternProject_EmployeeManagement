@@ -71,24 +71,24 @@ Backend geliştirmesi için IntelliJ IDEA kullanılırken aşağıdaki ayarları
 
 
 # src/main/resources/application.properties'daki ayarlamalar: 
-## spring.datasource.url=jdbc:postgresql://localhost:5432/employee-management   -->Dbeaver'da kurulan PostgreSQL'in ayarlarındaki url.
-## spring.datasource.username=postgres   -->PostgreSQL superuser.
-## spring.datasource.password=joyalty123   -->PostgreSQL kurulurken belirlenen şifre.
-## spring.jpa.hibernate.ddl-auto=update
-## spring.sql.init.mode=always
-## spring.jpa.show-sql=true
-## spring.datasource.driver-class-name=org.postgresql.Driver
-## spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-## spring.jpa.properties.hibernate.boot.allow_jdbc_metadata_access=false
-## spring.jpa.open-in-view=false
+   - spring.datasource.url=jdbc:postgresql://localhost:5432/employee-management   -->Dbeaver'da kurulan PostgreSQL'in ayarlarındaki url.
+   - spring.datasource.username=postgres   -->PostgreSQL superuser.
+   - spring.datasource.password=joyalty123   -->PostgreSQL kurulurken belirlenen şifre.
+   - spring.jpa.hibernate.ddl-auto=update
+   - spring.sql.init.mode=always
+   - spring.jpa.show-sql=true
+   - spring.datasource.driver-class-name=org.postgresql.Driver
+   - spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+   - spring.jpa.properties.hibernate.boot.allow_jdbc_metadata_access=false
+   - spring.jpa.open-in-view=false
 
 # Employee Management Database'ini manuel olarak oluşturmak için girilecek komutlar (cmd):
-## cd C:\Program Files\PostgreSQL\14\bin
-## psql -U postgres
-## CREATE DATABASE "employee-management";
+   - cd C:\Program Files\PostgreSQL\14\bin
+   - psql -U postgres
+   - CREATE DATABASE "employee-management";
 
 # Eğer postgres komutuna giderken şifre bilinmiyorsa:
-## ALTER USER postgres WITH PASSWORD 'new_password';
+   - ALTER USER postgres WITH PASSWORD 'new_password';
 
 # API Uç Noktaları
 
@@ -112,22 +112,19 @@ Backend geliştirmesi için IntelliJ IDEA kullanılırken aşağıdaki ayarları
 Frontend, React ile geliştirilmiş olup, kullanıcı arayüzünü sağlar ve backend API'leri ile etkileşime geçer.
 
 ## React Projesini Kurma
-```bash
-npx create-react-app employeemanagement-frontend
-cd employeemanagement-frontend
+   - npx create-react-app employeemanagement-frontend
+   - cd employeemanagement-frontend
 
 
 # Employee Management Ön Yüz React İçin İndirilmesi Gerekenler
 
 ## Gerekli Paketlerin İndirilmesi
 VS Code Terminalinde aşağıdaki komutları çalıştırın:
-
-```bash
-npm i bootstrap
-npm i axios
-npm i react-router-dom
-npm install --save-dev @babel/plugin-proposal-private-property-in-object
-npm install date-fns
+   - npm i bootstrap
+   - npm i axios
+   - npm i react-router-dom
+   - npm install --save-dev @babel/plugin-proposal-private-property-in-object
+   - npm install date-fns
 
 # Bileşenler
 
@@ -156,7 +153,7 @@ Maaş bilgilerini güncelleyen bileşendir.
 
 ## Backend
 Uygulamayı başlatmak için aşağıdaki komutu kullanın:
-```bash
+
 mvn spring-boot:run
 
 npm start
