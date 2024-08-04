@@ -10,6 +10,8 @@ const AddSalaryComponent = () => {
     const [startDate, setStartDate] = useState("");
     const [finishDate, setFinishDate] = useState("");
     const [employee, setEmployee] = useState(null); 
+    const [minStartDate, setMinStartDate] = useState(""); 
+    const [minFinishDate, setMinFinishDate] = useState(""); 
     const navigate = useNavigate();
     const { id } = useParams();
 
@@ -23,6 +25,19 @@ const AddSalaryComponent = () => {
     function saveSalary(e) {
         e.preventDefault();
         if (employee && salary !== "" && startDate !== "" && finishDate !== "") {
+            const start = new Date(startDate);
+            const finish = new Date(finishDate);
+
+            if (finish < start) {
+                alert("Finish date must be after the start date.");
+                return;
+            }
+
+            if (finish < new Date(start.getTime() + 28 * 24 * 60 * 60 * 1000)) {
+                alert("Finish date must be at least 28 days after the start date.");
+                return;
+            }
+
             if (id) {
                 SalaryService.updateSalary(id, salaryData)
                     .then(() => navigate("/employee-salary"))
@@ -42,14 +57,23 @@ const AddSalaryComponent = () => {
     }
 
     useEffect(() => {
+        const today = new Date();
+        const formattedToday = format(today, 'yyyy-MM-dd');
+        setMinStartDate(formattedToday);
+
+        const initialFinishDate = new Date(today);
+        initialFinishDate.setDate(today.getDate() + 28);
+        const formattedInitialFinishDate = format(initialFinishDate, 'yyyy-MM-dd');
+        setMinFinishDate(formattedInitialFinishDate);
+
         if (id) {
             SalaryService.getSalaryById(id)
                 .then(res => {
                     const { employee, salary, startDate, finishDate } = res.data;
                     setEmployee(employee); 
                     setSalary(salary || "");
-                    setStartDate(startDate ? format(new Date(startDate), 'yyyy-MM-dd') : "");
-                    setFinishDate(finishDate ? format(new Date(finishDate), 'yyyy-MM-dd') : "");
+                    setStartDate(startDate ? format(new Date(startDate), 'yyyy-MM-dd') : formattedToday);
+                    setFinishDate(finishDate ? format(new Date(finishDate), 'yyyy-MM-dd') : formattedInitialFinishDate);
                 })
                 .catch(e => console.log(e));
         }
@@ -62,6 +86,25 @@ const AddSalaryComponent = () => {
                 .catch(e => console.log(e));
         }
     }, [employeeId]);
+
+    const handleStartDateChange = (e) => {
+        const value = e.target.value;
+        setStartDate(value);
+        
+        const start = new Date(value);
+        const finish = new Date(start);
+        finish.setDate(start.getDate() + 28);
+        setFinishDate(format(finish, 'yyyy-MM-dd'));
+
+        const minFinish = new Date(start);
+        minFinish.setDate(start.getDate() + 28);
+        setMinFinishDate(format(minFinish, 'yyyy-MM-dd'));
+    };
+
+    const handleFinishDateChange = (e) => {
+        const value = e.target.value;
+        setFinishDate(value);
+    };
 
     return (
         <div>
@@ -89,14 +132,18 @@ const AddSalaryComponent = () => {
                                 <div className='form-group mb-2'>
                                     <input className='form-control'
                                         value={startDate}
-                                        onChange={(e) => setStartDate(e.target.value)}
-                                        type="date" placeholder='Enter Start Date' />
+                                        onChange={handleStartDateChange}
+                                        type="date"
+                                        min={minStartDate}
+                                        placeholder='Enter Start Date' />
                                 </div>
                                 <div className='form-group mb-2'>
                                     <input className='form-control'
                                         value={finishDate}
-                                        onChange={(e) => setFinishDate(e.target.value)}
-                                        type="date" placeholder='Enter Finish Date' />
+                                        onChange={handleFinishDateChange}
+                                        type="date"
+                                        min={minFinishDate}
+                                        placeholder='Enter Finish Date' />
                                 </div>
                                 <button onClick={saveSalary} className='btn btn-success'>Save</button> {" "}
                                 <Link to={"/employee-salary"} className='btn btn-danger'>Cancel</Link>

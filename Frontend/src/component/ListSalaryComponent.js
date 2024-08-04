@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import SalaryService from '../service/SalaryService';
 import { format } from 'date-fns';
 
@@ -15,17 +15,26 @@ const EmployeeSalaryComponent = () => {
             .then(res => setSalaryArray(res.data))
             .catch(e => console.log(e));
     }
-    
+
     function formatDate(dateString) {
         if (!dateString) return "N/A";
         return format(new Date(dateString), 'yyyy-MM-dd');
+    }
+
+    function deleteSalary(e, id) {
+        e.preventDefault();
+        SalaryService.deleteSalary(id)
+            .then(() => {
+                getAllSalary();
+            })
+            .catch(e => console.log(e));
     }
 
     return (
         <div className='container'>
             <div className='button-container'>
                 <Link to={"/add-salary"} className='custom-blue-btn mb-2 mt-3'>Add Salary</Link>
-                <Link to={"/employee"} className='btn btn-primary mb-2 mt-3' href="">List Employee</Link>
+                <Link to={"/employee"} className='btn btn-primary mb-2 mt-3'>List Employee</Link>
             </div>
             <h2 className='text-center mb-4'>List Employees Salary</h2>
             <table className='table table-bordered table striped'>
@@ -48,12 +57,17 @@ const EmployeeSalaryComponent = () => {
                             <td>{formatDate(salary.startDate)}</td>
                             <td>{formatDate(salary.finishDate)}</td>
                             <td>
-                            <Link to={`/employee-salary/update-salary/${salary.id}`} className='btn btn-info' href="">Update</Link> {" "}</td>
-                        </tr>)}
+                                <Link to={`/employee-salary/update-salary/${salary.id}`} className='btn btn-info'>Update</Link>{" "}
+                                <button onClick={(e) => deleteSalary(e, salary.id)} className='btn btn-danger'>
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
         </div>
-    )
+    );
 }
 
 export default EmployeeSalaryComponent;

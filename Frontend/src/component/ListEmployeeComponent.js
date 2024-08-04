@@ -16,8 +16,12 @@ const ListEmployeeComponent = () => {
     }
 
     function deleteEmployee(e, id) {
-        e.preventDefault()
-        EmployeeService.deleteEmployee(id).then(getAllEmployee()).catch(e => console.log(e));
+        e.preventDefault();
+        EmployeeService.deleteEmployee(id)
+            .then(() => {
+                getAllEmployee();
+            })
+            .catch(e => console.error('Error deleting employee:', e));
     }
 
     return (
