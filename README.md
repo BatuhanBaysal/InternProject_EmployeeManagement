@@ -90,6 +90,7 @@ Backend geliştirmesi için IntelliJ IDEA kullanılırken aşağıdaki ayarları
 # Eğer postgres komutuna giderken şifre bilinmiyorsa:
    - ALTER USER postgres WITH PASSWORD 'new_password';
 
+
 # API Uç Noktaları
 
 ## Çalışan API:
@@ -105,6 +106,7 @@ Backend geliştirmesi için IntelliJ IDEA kullanılırken aşağıdaki ayarları
 - **GET /salary/{id}**: Belirli bir maaşı getirir.
 - **PUT /salary/{id}**: Mevcut bir maaşı günceller.
 - **DELETE /salary/{id}**: Belirli bir maaşı siler.
+
 
 # Frontend
 
@@ -125,6 +127,7 @@ VS Code Terminalinde aşağıdaki komutları çalıştırın:
    - npm i react-router-dom
    - npm install --save-dev @babel/plugin-proposal-private-property-in-object
    - npm install date-fns
+
 
 # Bileşenler
 
@@ -149,11 +152,11 @@ Yeni bir maaş ekleyen bileşendir.
 ## UpdateSalaryComponent
 Maaş bilgilerini güncelleyen bileşendir.
 
+
 # Kullanım
 
 ## Backend
-Uygulamayı başlatmak için aşağıdaki komutu kullanın:
+   - Uygulamayı başlatmak için aşağıdaki komutu kullanın: mvn spring-boot:run
 
-mvn spring-boot:run
-
-npm start
+## Frontend
+   - npm start
