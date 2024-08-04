@@ -1,18 +1,74 @@
 # Employee Management System
-## Bu proje, çalışan ve maaş bilgilerini yönetmek için geliştirilmiş bir Employee Management System'dır. Uygulama, Spring Boot ile geliştirilmiş bir backend ve React ile oluşturulmuş bir frontend içerir. PostgreSQL veritabanı kullanılarak veri yönetimi sağlanır. Employee Management System iki tablodan oluşur. Ana tablo employee'nin id(primary key), firstName, lastName, email sütunları bulunur. İkinci tablo salary'nin id(primary key), salary, employee_id(foreign key -> employee tablosundaki id), startDate, finishDate sütunları bulunur. 
 
-## Kullanılan Programlar: Intellij(Java), Dbeaver(PostgreSQL), Postman, Visual Studio Code(Git, Node.js ve react).
+## Proje Açıklaması
+
+Bu proje, çalışan ve maaş bilgilerini yönetmek için geliştirilmiş bir Employee Management System'dır. Uygulama, Spring Boot ile geliştirilmiş bir backend ve React ile oluşturulmuş bir frontend içerir. PostgreSQL veritabanı kullanılarak veri yönetimi sağlanır.
+
+## Veritabanı Yapısı
+
+Employee Management System iki tablodan oluşur:
+
+- **Employee** tablosu:
+  - `id`: (int, primary key) Çalışanın benzersiz kimliği.
+  - `firstName`: (string) Çalışanın adı.
+  - `lastName`: (string) Çalışanın soyadı.
+  - `email`: (string) Çalışanın e-posta adresi.
+
+- **Salary** tablosu:
+  - `id`: (int, primary key) Maaş kaydının benzersiz kimliği.
+  - `salary`: (long) Maaş miktarı.
+  - `employee_id`: (int, foreign key) Çalışan tablosundaki id.
+  - `startDate`: (date) Maaşın başladığı tarih.
+  - `finishDate`: (date) Maaşın sona erdiği tarih.
+
+
+## Kullanılan Programlar
+
+- **IntelliJ IDEA**: Java geliştirme ortamı.
+- **DBeaver**: PostgreSQL veritabanı yönetim aracı.
+- **Postman**: API test aracı.
+- **Visual Studio Code**: Git, Node.js ve React geliştirme ortamı.
 
 # Özellikler
-## Çalışan Yönetimi: Çalışan ekleme, güncelleme, silme ve listeleme işlevleri.
-## Maaş Yönetimi: Maaş ekleme, güncelleme, silme ve listeleme işlevleri.
-## Validasyon: Maaş başlangıç ve bitiş tarihlerinin kontrolü, bitiş tarihinin başlangıç tarihinden en az 28 gün sonra olması sağlanır.
+
+## Çalışan Yönetimi
+
+- Çalışan ekleme
+- Çalışan güncelleme
+- Çalışan silme
+- Çalışan listeleme
+
+## Maaş Yönetimi
+
+- Maaş ekleme
+- Maaş güncelleme
+- Maaş silme
+- Maaş listeleme
+
+## Validasyon
+
+- Maaş başlangıç ve bitiş tarihlerinin kontrolü
+- Bitiş tarihinin, başlangıç tarihinden en az 28 gün sonra olması sağlanır.
+
 
 
 # Backend
-## Backend, Spring Boot kullanılarak geliştirilmiştir ve PostgreSQL veritabanına bağlanır.
 
-## İntellij'de Setting -> Build, Execution, Deployment -> Build Tools -> Maven. Bu kısımdan "Maven home path: Bundled (Maven 3)" seçilmelidir. Ayrıca SDK corretto-17 seçilmiştir.
+## Genel Bilgi
+
+Backend, Spring Boot kullanılarak geliştirilmiştir ve PostgreSQL veritabanına bağlanır.
+
+## IntelliJ IDEA Ayarları
+
+Backend geliştirmesi için IntelliJ IDEA kullanılırken aşağıdaki ayarların yapılması gerekmektedir:
+
+1. **Maven Ayarları**:
+   - IntelliJ IDEA'de `Settings` (Ayarlar) -> `Build, Execution, Deployment` (İnşa, Çalıştırma, Dağıtım) -> `Build Tools` (İnşa Araçları) -> `Maven` (Maven) bölümüne gidin.
+   - "Maven home path" (Maven ana yolunu) `Bundled (Maven 3)` olarak seçin.
+
+2. **SDK Seçimi**:
+   - Java SDK olarak `corretto-17` seçilmelidir.
+
 
 # src/main/resources/application.properties'daki ayarlamalar: 
 ## spring.datasource.url=jdbc:postgresql://localhost:5432/employee-management   -->Dbeaver'da kurulan PostgreSQL'in ayarlarındaki url.
@@ -35,46 +91,72 @@
 ## ALTER USER postgres WITH PASSWORD 'new_password';
 
 # API Uç Noktaları
-# Çalışan API:
-## POST /employee: Yeni çalışan ekler.
-## GET /employee: Tüm çalışanları listeler.
-## GET /employee/{id}: Belirli bir çalışanı getirir.
-## PUT /employee/{id}: Mevcut bir çalışanı günceller.
-## DELETE /employee/{id}: Belirli bir çalışanı siler.
 
-# Maaş API:
-## POST /salary: Yeni maaş ekler.
-## GET /salary: Tüm maaşları listeler.
-## GET /salary/{id}: Belirli bir maaşı getirir.
-## PUT /salary/{id}: Mevcut bir maaşı günceller.
-## DELETE /salary/{id}: Belirli bir maaşı siler.
+## Çalışan API:
+- **POST /employee**: Yeni çalışan ekler.
+- **GET /employee**: Tüm çalışanları listeler.
+- **GET /employee/{id}**: Belirli bir çalışanı getirir.
+- **PUT /employee/{id}**: Mevcut bir çalışanı günceller.
+- **DELETE /employee/{id}**: Belirli bir çalışanı siler.
 
+## Maaş API:
+- **POST /salary**: Yeni maaş ekler.
+- **GET /salary**: Tüm maaşları listeler.
+- **GET /salary/{id}**: Belirli bir maaşı getirir.
+- **PUT /salary/{id}**: Mevcut bir maaşı günceller.
+- **DELETE /salary/{id}**: Belirli bir maaşı siler.
 
 # Frontend
-## Frontend, React ile geliştirilmiş olup, kullanıcı arayüzünü sağlar ve backend API'leri ile etkileşime geçer.
 
-# React Projesini Kurma:
-## npx create-react-app employeemanagement-frontend
-## cd employeemanagement-frontend
+## Genel Bakış
+Frontend, React ile geliştirilmiş olup, kullanıcı arayüzünü sağlar ve backend API'leri ile etkileşime geçer.
 
-# Employee Management Ön yüz React için indirilmesi gerekenler (VS Code Terminal):
-## npm i bootstrap
-## npm i axios
-## npm i react-router-dom
-## npm install --save-dev @babel/plugin-proposal-private-property-in-object
-## npm install date-fns
+## React Projesini Kurma
+```bash
+npx create-react-app employeemanagement-frontend
+cd employeemanagement-frontend
 
-## VS Code Terminalde "npm start" yazarak proje ayağa kaldırılır.
+
+# Employee Management Ön Yüz React İçin İndirilmesi Gerekenler
+
+## Gerekli Paketlerin İndirilmesi
+VS Code Terminalinde aşağıdaki komutları çalıştırın:
+
+```bash
+npm i bootstrap
+npm i axios
+npm i react-router-dom
+npm install --save-dev @babel/plugin-proposal-private-property-in-object
+npm install date-fns
 
 # Bileşenler
-## App.js: Yönlendirme yapılandırması, tüm uygulama için ana bileşen.
-## ListEmployeeComponent: Çalışanları listeleyen bileşen.
-## AddEmployeeComponent: Yeni çalışan ekleyen bileşen.
-## UpdateEmployeeComponent: Çalışan bilgilerini güncelleyen bileşen.
-## ListSalaryComponent: Maaşları listeleyen bileşen.
-## AddSalaryComponent: Yeni maaş ekleyen bileşen.
-## UpdateSalaryComponent: Maaş bilgilerini güncelleyen bileşen.
+
+## App.js
+Yönlendirme yapılandırmasını ve tüm uygulama için ana bileşeni içerir.
+
+## ListEmployeeComponent
+Çalışanları listeleyen bileşendir.
+
+## AddEmployeeComponent
+Yeni bir çalışan ekleyen bileşendir.
+
+## UpdateEmployeeComponent
+Çalışan bilgilerini güncelleyen bileşendir.
+
+## ListSalaryComponent
+Maaşları listeleyen bileşendir.
+
+## AddSalaryComponent
+Yeni bir maaş ekleyen bileşendir.
+
+## UpdateSalaryComponent
+Maaş bilgilerini güncelleyen bileşendir.
 
 # Kullanım
-## Backend: Uygulamayı başlatmak için mvn spring-boot:run komutunu kullanın (veya IDE'nizden çalıştırın). PostgreSQL veritabanını localhost:5432 adresinde yapılandırın.
-## Frontend: React uygulamasını başlatmak için npm start komutunu kullanın.
+
+## Backend
+Uygulamayı başlatmak için aşağıdaki komutu kullanın:
+```bash
+mvn spring-boot:run
+
+npm start
