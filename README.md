@@ -1,83 +1,141 @@
-## Internship Project - Employee Management System (Full Stack Development with Spring Boot)
-- Bu proje, stajım sırasında geliştirilen bir Tam Yığın(Full Stack) Çalışan Yönetim Sistemidir. Arka uç, `Spring Boot` ile `Java`, veritabanı için `PostgreSQL` (pgAdmin kullanılarak oluşturulmuştur) ve veritabanı yönetimi için `DBeaver` kullanılarak oluşturulmuştur. Ön uç `React.js`, `HTML`, `CSS` ve `JavaScript` ile geliştirilmiştir. API testi için `Postman` kullanılmıştır.
-- Stajımın ardından Full Stack Development alanında kendimi geliştirmeye karar verdim. Bu doğrultuda çeşitli eğitim programlarına katıldım ve bu eğitmlerden elde ettiğim bilgilerle staj sürecinde yazdığım program üzerinde ek geliştirmeler yaptım.
+# Internship Project - Employee Management System 
 
-### Genel Bakış
+### Full Stack Development with Java, Spring Boot, PostgreSQL, React.js 
 
-#### Kullanılan Teknolojiler:
-- **Backend**: Java, Spring Boot
-- **Frontend**: React.js, HTML, CSS, JavaScript
-- **Database**: PostgreSQL
-- **API Testing**: Postman
+---
 
-#### Kullanılan Programlar:
-- **Backend Development**: IntelliJ IDEA
-- **Frontend Development**: Visual Studio Code
-- **Database Management**: pgAdmin, DBeaver
+- Bu proje, stajım sırasında geliştirilen bir `Tam Yığın (Full Stack)` Çalışan Yönetim Sistemidir. Proje kapsamında `Spring Boot` ve `React.js` teknolojileri kullanılarak backend ve frontend geliştirilmiştir. Veritabanı olarak `PostgreSQL`, API testi için `Postman` kullanılmıştır. 
 
-#### Veritabanı Yapısı:
-- **Employee Table**: Ad, soyad ve e-posta gibi çalışan ayrıntılarını içerir.
-- **Salary Table**: Başlangıç ve bitiş tarihleriyle birlikte maaş bilgilerini içerir. Bu tablo, bir yabancı anahtar aracılığıyla **Employee** tablosuna bağlanır.
+- Stajımın ardından `Full Stack Development` alanında kendimi geliştirmeye karar verdim. Bu doğrultuda çeşitli eğitim programlarına katıldım ve bu eğitimlerden elde ettiğim bilgilerle staj sürecinde yazdığım program üzerinde ek geliştirmeler yaptım.
 
-#### Temel Özellikler:
-- Kullanıcılar hem **Employee** hem de **Salary** tablolarında CRUD işlemleri gerçekleştirebilir.
-- Bir çalışan silindiğinde, ilişkili maaş kayıtları da silinir.
-- `Exception handling`, uygulama boyunca hata bildirimleri sağlamak için uygulanmaktadır.
-- Karmaşıklığı azaltmak ve güvenliği sağlamak için **DTO** (Veri Aktarım Nesneleri) ve **Mapper** kullanılır.
+---
 
-### Backend (Arka uç)
-Backend, `Spring Boot` kullanılarak `IntelliJ IDEA` ile geliştirilmiş olup, veritabanı `pgAdmin` ile oluşturulmuş ve `PostgreSQL` ile erişim sağlanmıştır.
+## 1. Proje Hakkında (Overview)
 
-#### IntelliJ IDEA Ayarları
-Backend geliştirmesi için `IntelliJ IDEA` kullanılırken aşağıdaki ayarların yapılması gerekmektedir:
+- **Kullanılan Teknolojiler**:
+   - Backend: Java, Spring Boot
+   - Frontend: React.js, JavaScript, CSS, HTML  
+   - Database: PostgreSQL
+   - API Testing: Postman
 
-1. **Maven Ayarları**:
-   - IntelliJ IDEA'de `Settings` (Ayarlar) -> `Build, Execution, Deployment` (İnşa, Çalıştırma, Dağıtım) -> `Build Tools` (İnşa Araçları) -> `Maven` (Maven) bölümüne gidin.
-   - "Maven home path" (Maven ana yolunu) `Bundled (Maven 3)` olarak seçin.
+- **Kullanılan Programlar**:
+   - Backend Development: IntelliJ IDEA
+   - Frontend Development: Visual Studio Code
+   - Database Management: DBeaver, pgAdmin 
 
-2. **SDK Seçimi**:
-   - Java SDK olarak `corretto-17` seçilmelidir.
-   - Projede `Java 17` kullanılmıştır.
+- **Veritabanı Yapısı**:
+   - Employee Table: Çalışan ad, soyad ve e-posta bilgilerini içerir.
+   - Salary Table: Çalışan maaş bilgilerini başlangıç ve bitiş tarihleri ile birlikte tutar. Bu tablo, bir yabancı anahtar (foreign key) aracılığıyla `Employee` tablosuna bağlanır.
 
-#### `application.properties` ayarlamaları: 
-   - spring.datasource.url=jdbc:postgresql://localhost:5432/employee-management --> Dbeaver programında oluşturulan PostgreSQL veritabanındaki `Edit Connection` kısmındaki url.
-   - spring.datasource.username=postgres --> PostgreSQL superuser.
-   - spring.datasource.password=joyalty123 --> PostgreSQL `Edit Connection` kısmındaki belirlenen şifre.
-   - spring.jpa.hibernate.ddl-auto=update
-   - spring.sql.init.mode=always
-   - spring.jpa.show-sql=true
-   - spring.datasource.driver-class-name=org.postgresql.Driver
-   - spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-   - spring.jpa.properties.hibernate.boot.allow_jdbc_metadata_access=false
-   - spring.jpa.open-in-view=false
+- **Temel Özellikler**:
+   - CRUD işlemleri: Kullanıcılar hem `Employee` hem de `Salary` tablolarında CRUD işlemleri gerçekleştirebilir.
+   - Kaskadlı Silme: Bir çalışan silindiğinde ilişkili maaş kayıtları da silinir.
+   - Exception Handling: Uygulama boyunca hata bildirimleri sağlanır.
+   - DTO ve Mapper: Karmaşıklığı azaltmak ve güvenliği artırmak için Veri Aktarım Nesneleri (DTO) ve Mapper kullanımı.
 
-#### Bu kısım `pgAdmin` programı kullanılarak Database oluşturulur. Eğer komut ile yapacaksksanız Employee Management Database'ini manuel olarak oluşturmak için girilecek komutlar (`cmd`):
-   - cd C:\Program Files\PostgreSQL\17\bin
-   - psql -U postgres
-   - CREATE DATABASE "employee-management";
+---
 
-#### Eğer postgres komutuna giderken şifre bilinmiyorsa(Dbeaver Kurulumu sırasında superuser için belirlenen şifre) (`cmd`):
-   - ALTER USER postgres WITH PASSWORD 'new_password';
+## 2. Teknik Bilgiler (Technical Details)
 
-### Frontend
-Frontend, `React.js` ile geliştirilmiş olup, kullanıcı arayüzünü sağlar ve backend API'leri ile etkileşime geçer.
+- **Backend**
 
-#### React Projesini Kurma (`cmd`)
-   - npx create-react-app employeemanagement-frontend
-   - cd employeemanagement-frontend
+   - **Mimari**: Model-View-Controller (MVC)
+   - IntelliJ IDEA ile geliştirilmiş ve PostgreSQL veritabanına bağlanmıştır.
+   - **Ayarlar**:
+      - Maven yapılandırması: IntelliJ IDEA'de Maven ana yolu "Bundled (Maven 3)" olarak ayarlanır.
+      - **Java SDK**: `corretto-17` kullanılarak geliştirilmiştir.
+      - **application.properties** dosyası:
 
-#### Employee Management Ön Yüz React İçin İndirilmesi Gerekenler
-Visual Studio Code Terminalinde aşağıdaki komutları çalıştırın:
-   - npm i bootstrap
-   - npm i axios
-   - npm i react-router-dom
-   - npm install --save-dev @babel/plugin-proposal-private-property-in-object
-   - npm install date-fns
+      ```application.properties
+      spring.datasource.url=jdbc:postgresql://localhost:5432/employee-management
+      spring.datasource.username=postgres
+      spring.datasource.password=12345678
+      spring.jpa.hibernate.ddl-auto=update
+      spring.sql.init.mode=always
+      spring.jpa.show-sql=true
+      spring.datasource.driver-class-name=org.postgresql.Driver
+      spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+      spring.jpa.open-in-view=false
+      ```
 
-### Kullanım
+      - **Veritabanı Oluşturma**: `pgAdmin` ile veritabanı oluşturulur.
+      - **Veritabanı Komutları (Manuel oluşturmak için)**:
 
-#### Backend
-   - Uygulamayı başlatmak için aşağıdaki komutu kullanın: mvn spring-boot:run
+      ```cmd
+      cd C:\Program Files\PostgreSQL\17\bin
+      psql -U postgres
+      CREATE DATABASE "employee-management";
+      ```
 
-#### Frontend
-   - Uygulamayı başlatmak için aşağıdaki komutu kullanın: npm start
+      - **Not**: Eğer `psql -U postgres` komutu girildikten sonra çıkan şifre bilinmiyorsa (PostgreSQL Kurulumu sırasında superuser için belirlenen şifre):
+
+      ```cmd
+      ALTER USER postgres WITH PASSWORD 'new_password';
+      ```
+
+      - **Önemli Not**: PostgreSQL kurulumu sırasında `The Database cluster initialization failed.` hatası alınırsa indirilen tüm dosyaları bilgisayardan silin ve kurulumu yönetici olarak açıp konumu `English United State America` seçin.
+
+---
+
+- **Frontend**
+   - React.js ile geliştirilmiştir.
+   - Kullanıcı arayüzü tasarımı ve backend API'leriyle etkileşim sağlanmıştır.
+   - **React.js kurulumu**:
+      ```VS Code terminal
+      npx create-react-app employeemanagement-frontend
+      cd employeemanagement-frontend
+      ```
+
+- **Gerekli Bağımlılıklar**:
+   ```VS Code terminal
+   npm i bootstrap
+   npm i axios
+   npm i react-router-dom
+   npm install --save-dev @babel/plugin-proposal-private-property-in-object
+   npm install date-fns
+   ```
+
+---
+
+## 3. Kullanım (Usage)
+
+- **Backend**
+   - Uygulamayı başlatmak için bu komut kullanılır: `mvn spring-boot:run`
+
+- **Frontend**
+   - Uygulamayı başlatmak için bu komut kullanılır: `npm start`
+
+---
+
+## 4. Öne Çıkan Özellikler (Key Features)
+
+- Tam Yığın (Full Stack) geliştirme yaklaşımı.
+- PostgreSQL ile güvenilir veritabanı yönetimi.
+- RESTful API ve CRUD işlemleri.
+- DTO ve Mapper ile temiz ve modüler kod yapısı.
+- Exception Handling ile kullanıcı dostu hata yönetimi.
+
+---
+
+## 5. Demo ve Ekran Görüntüleri (Demo & Screenshots)
+
+Backend kısmı Intellij IDEA'dan, Frontend kısmını Visual Studio Code programından çalıştırılabilir.
+
+---
+
+## 6. Katkıda Bulunanlar ve Kaynaklar (Contributors & Resources)
+
+- **Proje Sahibi**: [Batuhan Baysal](https://www.linkedin.com/in/batuhan-baysal-502656170/)
+
+- **Kaynaklar**:
+   - Spring Boot Resmi Dokümantasyonu
+   - React.js Resmi Kılavuzu
+   - PostgreSQL Veritabanı Yönetimi
+
+---
+
+## 7. İletişim ve Destek (Contact & Support)
+
+- **LinkedIn**: [Batuhan Baysal LinkedIn Profilim](https://www.linkedin.com/in/batuhan-baysal-502656170/)
+
+- **Github**: [Batuhan Baysal GitHub Profilim](https://github.com/BatuhanBaysal)
